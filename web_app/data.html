@@ -1,0 +1,120 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>HistomicsML - Import</title>
+
+		<script src="js/jquery-1.9.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+
+	</head>
+
+
+	<body>
+
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<ul class="nav navbar-nav"><li><a>HistomicsML</a></li></ul>
+	</div>
+
+
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="index.html" id='home'>Home</a></li>
+					<li><a href="viewer.html" id ="viewer">Heatmap</a></li>
+					<li class="active"><a href="#" id="nav_data">Import</a></li>
+					<li><a href="reports.html" id="nav_reports">Reports</a></li>
+					<li><a href="validation.html" id="nav_validation">Validation</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container">
+		    <div class="row">
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+						<center><img src="images/banner.png" class="img-responsive"></center>
+ 				</div>
+			</div>
+
+		</br>
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<h3>Import a dataset</h3>
+				</div>
+				<div class="col-sm-2 col-md-2 col-lg-2">
+				</div>
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<h3>Delete a dataset</h3>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4">
+
+						<form id="_form" name="_form" role="form" method="post" action="php/data.php">
+							<div class="form-group">
+								<label for="datasetName">Dataset name</label>
+								<input type="text" class="form-control" id="datasetName"
+										name="datasetName" placeholder="Enter dataset name"/>
+							</div>
+							<div class="form-group">
+								<label for="projectSel">Project directory</label>
+								<select class="form-control" id="projectSel" name="project">
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="pyramidSel">Slide information (.csv)</label>
+								<select class="form-control" id="pyramidSel" name="pyramid">
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="pcaSel">PCA transform (.pkl)</label>
+								<select class="form-control" id="pcaSel" name="pca">
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="featureSel">Features (.h5)</label>
+								<select class="form-control" id="featureSel" name="feature">
+								</select>
+							</div>
+						<div><button id="_submit" type="submit" class="btn btn-success" > Submit</button></div>
+						</form>
+				</div>
+				<div class="col-sm-2 col-md-2 col-lg-2">
+				</div>
+				<div class="col-sm-4 col-md-4 col-lg-4">
+							<form onsubmit="return confirm('Do you really want to delete this dataset?');" id="_form_delete" role="form" method="post" action="php/data_delete.php">
+								<div class="form-group">
+									<label for="deleteDatasetSel">Dataset
+									</label>
+									<select class="form-control" id="deleteDatasetSel" name="deleteDatasetSel">
+								</select>
+							</div>
+							<div><button id="_submit_delete" type="submit" class="btn btn-danger" > Remove</button></div>
+						</form>
+
+			</div>
+		</div>
+		</div>
+		<div class="modal fade" id="progDiag" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">
+							Processing dataset
+						</h4>
+					</div>
+					<div class="modal-body">
+						Please wait...
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/data.js"></script>
+	</body>
+</html>

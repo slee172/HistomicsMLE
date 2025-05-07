@@ -1,0 +1,188 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>HistomicsML</title>
+
+		<script src="js/jquery-1.9.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	</head>
+
+
+	<body>
+
+		<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					<ul class="nav navbar-nav"><li><a>HistomicsML</a></li></ul>
+				</div>
+
+				<div>
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="grid.html" id="nav_select">Instance</a></li>
+						<li><a href="viewer.html" id ="viewer">Heatmap</a></li>
+						<li><a href="heatmaps.html" id="nav_heatmaps">Gallery</a></li>
+						<li><a href="review.html" id="nav_review">Review</a></li>
+						<li><a href="data.html" id="nav_data">Import</a></li>
+						<li><a href="reports.html" id="nav_reports">Reports</a></li>
+						<li><a href="params_init.html" id="nav_paramsinit">Parameters</a></li>
+						<li><a href="params.html" id="nav_params">Parameters</a></li>
+						<li><a href="validation.html" id="nav_validation">Validation</a></li>
+					</ul>
+				</div>
+		</nav>
+
+		<div class="container">
+		    <div class="row">
+		    	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			    	<center><img src="images/banner.png" class="img-responsive"></center>
+ 				</div>
+			</div>
+
+			<br />
+
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<h2>Start a session</h2>
+				</div>
+
+				<div class="col-sm-2 col-md-2 col-lg-2">
+				</div>
+
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<h2>Continue a session</h2>
+				</div>
+
+			</div>
+
+			<br />
+
+			<div class="row">
+
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<form role="form" id="classifier_form" method="POST" action="php/initSession_nn.php" onsubmit=displayProg()>
+
+						<div class="form-group">
+							<label for="trainset">Classifier name</label>
+							<input type="text" class="form-control" id="trainset"
+									name="classifiername" placeholder="Enter classifier name">
+						</div>
+						<div class="form-group">
+							<label for="datasetSel">Training dataset</label>
+							<select class="form-control" id="datasetSel" name="dataset">
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="posClass">Positive class name</label>
+							<input type="text" class="form-control" id="posClass"
+									name="posName" placeholder="Enter positive class name">
+						</div>
+
+						<div class="form-group">
+							<label for="negClass">Negative class name</label>
+							<input type="text" class="form-control" id="negClass"
+									name="negName" placeholder="Enter negative class name">
+						</div>
+
+						<button id="beginSession" type="submit" name="submit" class="btn btn-default" value="submitted" >Begin</button>
+					</form>
+				</div>
+
+				<div class="col-sm-2 col-md-2 col-lg-2">
+				</div>
+
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<form role="form" id="reload_form" method="POST" action="php/reloadSession_nn.php" onsubmit=displayProg()>
+					<input type="hidden" class="form-control" id="reloadPosClass"
+							name="reloadPosClass" readonly="readonly">
+					<input type="hidden" class="form-control" id="reloadNegClass"
+							name="reloadNegClass" readonly="readonly">
+					<input type="hidden" class="form-control" id="reloadIterClass"
+							name="reloadIterClass" readonly="readonly">
+						<div class="form-group">
+							<label for="reloadDatasetSel">Training dataset</label>
+							<select class="form-control" id="reloadDatasetSel" name="reloadDataset">
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="reloadTrainSetSel">Classifier name</label>
+							<select class="form-control" id="reloadTrainSetSel" name="trainingset">
+							</select>
+							<br/>
+							<div>
+								<span><strong>Positive class:</strong></span>
+								<span id="reloadPos">Pos</span>
+								<br/>
+								<span><strong>Positive label count:</strong></span>
+								<span id="reloadPosCount">0</span>
+								<br/>
+								<span><strong>Negative class:</strong></span>
+								<span id="reloadNeg">Neg</span>
+								<br/>
+								<span><strong>Negative label count:</strong></span>
+								<span id="reloadNegCount">0</span>
+								<br/>
+								<span><strong>Iterations:</strong></span>
+								<span id="reloadIter">0</span>
+							</div>
+						</div>
+
+						<button id="reloadSession" type="submit" name="continue" class="btn btn-default" value="submitted" >Continue</button>
+					</form>
+				</div>
+
+			</div>
+
+
+			<div class="row top-buffer"></div>
+
+			<div class="row">
+				<input type="button" id="resetBtn" value="Reset Session" class="btn btn-danger" onClick="cancelSession()">
+			</div>
+		</div>
+
+		<div class="modal fade" id="progDiag" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">
+							Loading Dataset
+						</h4>
+					</div>
+
+					<div class="modal-body">
+						Please wait while the dataset is loaded
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="cancelDiag" tabindex="-1" role="dialog"
+			aria-labelledby="myCancelLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myCancelLabel">
+							Cancel Current Session
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="progress progress-popup">
+				 		<div class="progress-bar" id="cancelprogressBar"></div>
+						</div>
+						Please wait while current session is canceled
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/app_main.js"></script>
+	</body>
+</html>
